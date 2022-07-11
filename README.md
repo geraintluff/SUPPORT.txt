@@ -1,15 +1,20 @@
 # `MAINTAINERS.txt`
 
-This is a proposal for a formatted top-level file which includes time-frames alongside each maintainer's contact information.
+This is a proposal for a formatted top-level file which includes an timeout date alongside each maintainer's contact information.
 
 ```
 # Example MAINTAINERS.txt
+# These people will maintain the project until at least these dates
 
-2022-09-01 Jane Smith <jane@example.com>
+2023-09-01 Jane Smith <jane@example.com>
 
 typos and formatting:
-2023-01-01 Jane Smith <jane@example.com>
+2024-01-01 Jane Smith <jane@example.com>
 ```
+
+This indicates that Jane expects to continue general development/support until at least 1st September 2023, and typo/formatting fixes until the start of 2024.
+
+If Jane stays motivated to work on this project, the dates in this file will be regularly bumped further into the future.
 
 ## Motivation
 
@@ -17,42 +22,40 @@ When you publish open-source code (particularly tools or libraries), you implici
 
 On the other hand, it must be possible to (gracefully and considerately) stop maintaining a project.  Indefinite and unlimited commitments are a recipe for burnout.
 
-The proposed `MAINTAINERS.txt` pushes maintainers to think about and document their expected future involvement.  In an actively-maintained project, this file will be periodically bumped so it remains a suitable distance in the future.
+The proposed `MAINTAINERS.txt` pushes maintainers to think about (and document) their expected future involvement, and gives other developers clearer expectations for their dependencies.
 
 ### "That's too long"
 
-If declaring in writing that you'll actively maintain a project for at least the next 12 months feels ambitious, making this promise explicit *is the point*.
+If committing in writing to actively maintain a project for at least the next 18 months feels strange, making this promise explicit *is the point*.
 
-This obviously isn't binding, and life happens, but as developers we should be realistic about how much we can do in our free time.  For a new project, start short (maybe a week or a month?), and extend longer as you gain confidence in it.
+This obviously isn't binding (and life happens on its own schedule) - but as developers, we should be realistic about how much time and energy we have.
 
 ### "That's too short"
 
-If you want to build a product on top of an OSS library, but maintenance is only promised for six months, making you explicitly consider your backup plan *is the point*.
+If you want to build a product on top of an OSS library, but maintenance is only promised for 6 months, making you explicitly consider your backup plan *is the point*.
 
-The project might well be maintained beyond this point - but if it's an important dependency, maybe you could negotiate a support plan with the maintainers, or have someone else lined up if they resign.
+People write software for fun, so this date could get pushed back indefinitely - but as user-developers, we should recognise that the people who maintain our dependencies are allowed to stop.
 
 ## Requirements
 
-* **human-editable** - you shouldn't need special tools beyond a text editor
+* **human-editable** - you shouldn't need special tools, just a text editor
 * **machine-readable** - package-managers should be able to parse it
 * **sections** - a large project could have maintainers responsible for specific areas
 * **expiry dates** - periodically refreshed as a rolling commitment when actively being maintained
 
 ## Format
 
-There can be as many maintainers as you like.  A maintainer line begins with an ISO 8601 date, and the rest of the line is contact information, with any email addresses in angular brackets: `<...>`.
+A maintainer line begins with an ISO 8601 date, and the rest of the line is contact information, with any email addresses in angular brackets: `<...>`.  There can be as many maintainers as you like.
 
-A line which ends in `:` starts a section (ending any previous section), so you can commit to only maintaining certain aspects/areas.
+A line which ends in `:` starts a section (ending any previous section), so you can document certain aspects/areas separately.
 
 Comments begin with `#`, and all whitespace/indenting is ignored.
 
-The example `MAINTAINERS.txt` above says that Jane has committed to general maintenance until at least 1st September 2022, and will also fix typos/formatting until at least the start of 2023:
-
 ### Technical considerations
 
-The contact format is compatible with Git stores authors/committers, so automated tools could use the `user.name`/`user.email` Git configs.
+The contact format is similar to how Git stores authors/committers, so tools could use the `user.name`/`user.email` Git configs.
 
-There is an example Python tool (`maintainers.py`), with two commands ("bump" and "prune").
+There is an example Python tool (`maintainers.py`), with two commands: "bump" (update the timeout date) and "prune" (removes maintainers whose dates have passed).  However, as stated in "Requirements", `MAINTAINERS.txt` should be simple enough to maintain by hand.
 
 ## License
 

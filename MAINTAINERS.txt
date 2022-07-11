@@ -1,6 +1,6 @@
 # MAINTAINERS.txt specification
 
-2022-09-01 Geraint Luff <geraintluff@signalsmith.co.uk>
+2022-09-11 Geraint <luffgd@gmail.com>
 
 typos and formatting:
-2023-01-01 Geraint Luff <geraint@signalsmith-audio.co.uk>
+2023-01-01 Geraint <luffgd@gmail.com>
