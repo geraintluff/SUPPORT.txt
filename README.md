@@ -29,7 +29,7 @@ This obviously isn't binding, and life happens, but as developers we should be r
 
 If you want to build a product on top of an OSS library, but maintenance is only promised for six months, making you explicitly consider your backup plan *is the point*.
 
-The project will likely be maintained beyond this point - but if it's an important dependency, maybe you could negotiate a support plan with the maintainers, or have someone else lined up if they resign.
+The project might well be maintained beyond this point - but if it's an important dependency, maybe you could negotiate a support plan with the maintainers, or have someone else lined up if they resign.
 
 ## Requirements
 
@@ -52,7 +52,7 @@ The example `MAINTAINERS.txt` above says that Jane has committed to general main
 
 The contact format is compatible with Git stores authors/committers, so automated tools could use the `user.name`/`user.email` Git configs.
 
-There is an example Python tool (`maintainers.py`), which parses, bumps and prunes.
+There is an example Python tool (`maintainers.py`), with two commands ("bump" and "prune").
 
 ## License
 
