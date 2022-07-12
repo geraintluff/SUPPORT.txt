@@ -5,8 +5,8 @@ from dateutil.relativedelta import relativedelta
 import sys
 from subprocess import check_output, Popen, PIPE
 
-if not os.path.exists("MAINTAINERS.txt"):
-	print("Missing MAINTAINERS.txt")
+if not os.path.exists("SUPPORT.txt"):
+	print("Missing SUPPORT.txt")
 	exit(1);
 
 class Line:
@@ -121,7 +121,7 @@ class Maintainers:
 maintainers = Maintainers()
 
 success = True
-with open("MAINTAINERS.txt", 'r') as file:
+with open("SUPPORT.txt", 'r') as file:
 	for line in file:
 		if not maintainers.addLine(line):
 			success = False
@@ -142,7 +142,7 @@ now = datetime.datetime.now()
 command = sys.argv[1]
 if command == "bump":
 	if len(sys.argv) < 4:
-		print("maintainers.py bump [6] [months] [?info]")
+		print("support.py bump [6] [months] [?info]")
 		exit(1)
 	
 	if len(sys.argv) < 5:
@@ -171,5 +171,5 @@ else:
 	exit(1)
 
 # Whatever we did, write the result back
-with open("MAINTAINERS.txt", 'w') as file:
+with open("SUPPORT.txt", 'w') as file:
 	file.write(str(maintainers))
