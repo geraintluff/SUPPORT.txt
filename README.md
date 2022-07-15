@@ -2,6 +2,10 @@
 
 This is a proposal for a structured top-level file which includes a timeout date alongside each maintainer's contact information.
 
+Without this information, OSS developers and users may both make assumptions that seem "reasonable" from their side, and mismatched expectations can cause sore feelings and burnout risk.
+
+## Example
+
 ```
 # Example SUPPORT.txt
 # These people will maintain the project until at least these dates
