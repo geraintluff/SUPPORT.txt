@@ -9,11 +9,16 @@ if not os.path.exists("SUPPORT.txt"):
 	print("Missing SUPPORT.txt")
 	exit(1);
 
+now = datetime.datetime.now()
+expiredEntries = False
 class Line:
 	def __init__(self, literal, date, text):
 		if not literal:
 			try:
 				date = datetime.datetime.strptime(date, "%Y-%m-%d")
+				if now > date:
+					print("Entry expired: %s"%text)
+					expiredEntries = True
 			except Exception:
 				print("Failed to parse date: %s"%date)
 				text = date + text
@@ -43,6 +48,7 @@ class Group:
 	def __init__(self, name=None):
 		self.name = name
 		self.lines = []
+		self.latestDate = now
 
 	def __str__(self):
 		result = ""
@@ -60,7 +66,10 @@ class Group:
 			date = line.split()[0]
 			try:
 				remainder = line[len(date):]
-				self.lines.append(Line(False, date, remainder))
+				entry = Line(False, date, remainder)
+				self.lines.append(entry)
+				if entry.date > self.latestDate:
+					self.latestDate = entry.date
 				return True
 			except Exception:
 				print("Failed to parse date: %s"%date)
@@ -86,63 +95,65 @@ class Group:
 				return
 		self.lines.append(line)
 
-class Maintainers:
+class Support:
 	def __init__(self):
-		self.groups = [Group()]
+		self.sections = [Group()]
 	
 	def __str__(self):
 		result = ""
-		for group in self.groups:
-			result += str(group)
+		for section in self.sections:
+			result += str(section)
 		return result
 	
 	def addLine(self, line):
 		line = line.strip()
 		if line.endswith(":") and not line.startswith("#"):
 			trimmed = line[:-1]
-			self.groups.append(Group(trimmed))
+			self.sections.append(Group(trimmed))
 			return True
 		else:
-			return self.groups[-1].addLine(line)
+			return self.sections[-1].addLine(line)
 	
 	def prune(self, now):
-		for group in self.groups:
-			group.prune(now)
+		for section in self.sections:
+			section.prune(now)
 	
 	def bump(self, toDate, name):
 		found = False
-		for group in self.groups:
-			if group.bump(toDate, name):
+		for section in self.sections:
+			if section.bump(toDate, name):
 				found = True
 		return found
 
 ### Command-line interface
 
-maintainers = Maintainers()
+support = Support()
 
 success = True
 with open("SUPPORT.txt", 'r') as file:
 	for line in file:
-		if not maintainers.addLine(line):
+		if not support.addLine(line):
 			success = False
 if not success:
-	print("Parse error")
+	print("SUPPORT.txt parse error")
 	exit(1)
 
 if len(sys.argv) < 2:
-	print("parsed OK");
-	print("commands: bump, prune")
+	print("support promised for %i days"%(support.sections[0].latestDate - now).days)
+	for section in support.sections[1:]:
+		print("\n%s:\n\tpromised for %i days"%(section.name, (section.latestDate - now).days))
+	if expiredEntries:
+		print("\nSUPPORT.txt has outdated entries")
 	exit(0)
 
 def run(commandArray):
     pipe = Popen(commandArray, stdin=PIPE, stdout=PIPE);
     return pipe.communicate()[0].strip().decode('utf-8')
 
-now = datetime.datetime.now()
 command = sys.argv[1]
 if command == "bump":
 	if len(sys.argv) < 4:
-		print("support.py bump [6] [months] [?info]")
+		print("support.py bump [6] [months/days] [?info]")
 		exit(1)
 	
 	if len(sys.argv) < 5:
@@ -154,22 +165,22 @@ if command == "bump":
 		name = sys.argv[4]
 	
 	bumpDate = now
-	if sys.argv[3].startswith("day"):
+	if sys.argv[3].startswith("d"): # days
 		bumpDate += relativedelta(day=int(sys.argv[2]))
-	elif sys.argv[3].startswith("month"):
+	elif sys.argv[3].startswith("m"): # months
 		bumpDate += relativedelta(months=int(sys.argv[2]))
-	elif sys.argv[3].startswith("year"):
+	elif sys.argv[3].startswith("y"): # years
 		bumpDate += relativedelta(years=int(sys.argv[2]))
 	
-	if not maintainers.bump(bumpDate, name):
+	if not support.bump(bumpDate, name):
 		print("Adding new contact for: %s"%name)
-		maintainers.groups[0].add(bumpDate, name)
+		support.sections[0].add(bumpDate, name)
 elif command == "prune":
-	maintainers.prune(now)
+	support.prune(now)
 else:
 	print("Unknown command: %s"%command)
 	exit(1)
 
 # Whatever we did, write the result back
 with open("SUPPORT.txt", 'w') as file:
-	file.write(str(maintainers))
+	file.write(str(support))

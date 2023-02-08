@@ -59,14 +59,23 @@ Comments begin with `#`.  All whitespace/indenting is ignored.
 
 The contact format is similar to how Git stores authors/committers, so Git-centric tools could use the `user.name`/`user.email` configs.
 
-### Example script
+### Example Python script
 
-There is an example Python script ([`support.py`](https://github.com/geraintluff/SUPPORT.txt/blob/main/support.py)), with two commands:
+There is an example Python script ([`support.py`](https://github.com/geraintluff/SUPPORT.txt/blob/main/support.py)), which prints expiries for each section, checks for outdated entries.
 
-* `bump`: update the timeout date
-* `prune`: removes maintainers whose dates have passed
+It also has two commands: `bump` (updates the timeout date) and `prune` (removes maintainers whose dates have passed).  However, these are just for illustration, since (as stated in "Requirements") `SUPPORT.txt` should be simple enough to maintain by hand.
 
-However, this tool is just an illustration, since (as stated in "Requirements") `SUPPORT.txt` should be simple enough to maintain by hand.
+### Example HTML/JS widget
+
+There's an example JavaScript file ([`support.js`](https://github.com/geraintluff/SUPPORT.txt/blob/main/support.js)) which fetches SUPPORT.txt and adds the information into the HTML page.
+
+```html
+<body>
+	...
+	<script async src="support.js" data-url="/path/to/SUPPORT.txt"></script>
+	...
+</body>
+```
 
 ## License
 
