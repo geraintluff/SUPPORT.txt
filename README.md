@@ -61,13 +61,13 @@ The contact format is similar to how Git stores authors/committers, so Git-centr
 
 ### Example Python script
 
-There is an example Python script ([`support.py`](https://github.com/geraintluff/SUPPORT.txt/blob/main/support.py)), which prints expiries for each section, checks for outdated entries.
+There is an example Python script ([`support.py`](support.py)) which prints the current support periods.
 
-It also has two commands: `bump` (updates the timeout date) and `prune` (removes maintainers whose dates have passed).  However, these are just for illustration, since (as stated in "Requirements") `SUPPORT.txt` should be simple enough to maintain by hand.
+It can also make basic changes, but these are mostly for illustration, since (as stated in "Requirements") `SUPPORT.txt` should be simple enough to maintain by hand.
 
 ### Example HTML/JS widget
 
-There's an example JavaScript file ([`support.js`](https://github.com/geraintluff/SUPPORT.txt/blob/main/support.js)) which fetches SUPPORT.txt and adds the information into the HTML page.
+There's a JavaScript widget ([`support.js`](support.js)) which fetches SUPPORT.txt and adds the information into the HTML page.
 
 ```html
 <body>

@@ -1,13 +1,25 @@
 #!/usr/bin/env python3
+"""
+Tool for inspecting/updating SUPPORT.txt
+
+	support.py [command]
+
+Commands:
+	check: (default)
+		prints a short summary of support period(s)
+	bump:
+		extends the support date(s) for a maintainer
+	create:
+		creates a new SUPPORT.txt
+	prune:
+		removes support entries in the past
+"""
+
 import os.path
 import datetime
 from dateutil.relativedelta import relativedelta
 import sys
 from subprocess import check_output, Popen, PIPE
-
-if not os.path.exists("SUPPORT.txt"):
-	print("Missing SUPPORT.txt")
-	exit(1);
 
 now = datetime.datetime.now()
 expiredEntries = False
@@ -127,18 +139,29 @@ class Support:
 
 ### Command-line interface
 
+def run(commandArray):
+    pipe = Popen(commandArray, stdin=PIPE, stdout=PIPE);
+    return pipe.communicate()[0].strip().decode('utf-8')
+
 support = Support()
+command = "check"
+if len(sys.argv) >= 2:
+	command = sys.argv[1]
 
-success = True
-with open("SUPPORT.txt", 'r') as file:
-	for line in file:
-		if not support.addLine(line):
-			success = False
-if not success:
-	print("SUPPORT.txt parse error")
-	exit(1)
+if os.path.exists("SUPPORT.txt"):
+	success = True
+	with open("SUPPORT.txt", 'r') as file:
+		for line in file:
+			if not support.addLine(line):
+				success = False
+	if not success:
+		print("SUPPORT.txt parse error")
+		exit(1)
+elif command != "create":
+	print("No SUPPORT.txt")
+	exit(1);
 
-if len(sys.argv) < 2:
+if command == "check":
 	print("support promised for %i days"%(support.sections[0].latestDate - now).days)
 	for section in support.sections[1:]:
 		print("\n%s:\n\tpromised for %i days"%(section.name, (section.latestDate - now).days))
@@ -146,14 +169,12 @@ if len(sys.argv) < 2:
 		print("\nSUPPORT.txt has outdated entries")
 	exit(0)
 
-def run(commandArray):
-    pipe = Popen(commandArray, stdin=PIPE, stdout=PIPE);
-    return pipe.communicate()[0].strip().decode('utf-8')
+if command == "create":
+	support.addLine("# https://github.com/geraintluff/SUPPORT.txt")
 
-command = sys.argv[1]
-if command == "bump":
+if command == "bump" or command == "create":
 	if len(sys.argv) < 4:
-		print("support.py bump [6] [months/days] [?info]")
+		print("support.py %s [6] [months/days] [?info]"%command)
 		exit(1)
 	
 	if len(sys.argv) < 5:
