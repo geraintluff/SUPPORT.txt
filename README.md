@@ -63,4 +63,4 @@ There is an example Python script (`support.py`), with two commands: "bump" (upd
 
 ## License
 
-Everything in this repo (including `support.py`) is released under [The Unlicense](LICENSE.txt).
+Everything in this repo (including `support.py`) is released under [0BSD](LICENSE.txt).

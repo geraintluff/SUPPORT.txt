@@ -1,6 +1,6 @@
 # SUPPORT.txt specification
 
-2022-09-11 Geraint <luffgd@gmail.com>
+2023-06-01 Geraint <luffgd@gmail.com>
 
 typos and formatting:
-2023-01-01 Geraint <luffgd@gmail.com>
+2024-01-01 Geraint <luffgd@gmail.com>
