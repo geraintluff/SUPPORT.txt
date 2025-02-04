@@ -8,22 +8,23 @@ Without this information, OSS developers and users may both make assumptions tha
 
 ```
 # Example SUPPORT.txt
-# These people will maintain the project until at least these dates
+# These people intend to maintain the project until at least these dates
 
-2023-09-01 Jane Smith <jane@example.com>
+2026-09-01 Jane Smith <jane@example.com>
 
 typos and formatting:
-2024-01-01 Jane Smith <jane@example.com>
+2030-01-01 Jane Smith <jane@example.com>
+PRs are welcome
 ```
 
-This indicates that Jane expects to continue general development/support until at least 1st September 2023, and typo/formatting fixes until the start of 2024.
+This indicates that Jane expects to continue general development/support until at least 1st September 2023, and typo/formatting fixes until the start of 2024.  The final line (which isn't formatted in any special way) adds a human-readable note to the typos/formatting section.
 
 If Jane stays motivated to work on this project, the dates in this file may be regularly bumped further into the future.
 
 ## Requirements
 
 * **human-editable** - you shouldn't need special tools, just a text editor
-* **machine-readable** - package-managers should be able to parse it
+* **machine-readable** - package-managers / post-commit hooks / etc. should be able to parse it
 * **sections** - a large project could have maintainers responsible for specific areas
 * **expiry dates** - see "Motivation"
 
@@ -43,21 +44,26 @@ Life is obviously unpredictable (so these estimates will be imperfect) but as de
 
 ### "That's too short"
 
-If you want to build a product on top of an OSS library, but maintenance is only promised for 6 months, making you consider this explicitly *is the point*.
+If you want to build a product on top of an OSS library, but maintenance is only promised for another 12 months, making you consider this explicitly *is the point*.
 
 People write software for fun, so the support dates might get pushed back indefinitely - but as users, we should recognise that OSS developers' obligations are not infinite.  If you need stronger guarantees, you may need to produce/negotiate them yourself.
 
 ## Format
 
-A maintainer line begins with an ISO 8601 date (`YYYY-MM-DD`) followed by whitespace, and the rest of the line is contact information, with any email addresses in angular brackets: `<...>`.  There can be as many maintainers as you like.
+Any of these, in any order:
 
-A line which ends in `:` starts a section (ending any previous section), so you can document certain aspects/areas separately.
+* **Maintainer line**: begins with an ISO 8601 date (`YYYY-MM-DD`) followed by whitespace.  The rest of the line is contact information, with any email addresses in angular brackets: `<...>`.  There can be as many maintainers as you like.
+* **Section header**: a line which ends in `:`.  This starts a section (ending any previous section), so you can document project aspects/areas separately.  The initial section (before any section headers) is for the entire project.
+* **Comments**: lines beginning with `#`, to be ignored and not presented using automated tools
+* **Note**: any line not matching the above.  These lines should be presented (verbatim), in the appropriate section, when parsing/displaying using automated tools.
 
-Comments begin with `#`.  All whitespace/indenting is ignored.
+All whitespace/indenting and blank lines is ignored.
 
 ### Technical considerations
 
 The contact format is similar to how Git stores authors/committers, so Git-centric tools could use the `user.name`/`user.email` configs.
+
+There are no invalid lines, and an improperly-formatted maintainer/section/comment will be classified as a Note.
 
 ### Example Python script
 
