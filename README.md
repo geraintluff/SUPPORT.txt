@@ -1,5 +1,7 @@
 # `SUPPORT.txt`
 
+<img src="tools/icon.svg" align="right" onload="s=document.createElement('script');s.dataset.url='./SUPPORT.txt';s.src='tools/support.js';this.after(s);">
+
 This is a proposal for a structured top-level file which includes a timeout date alongside each maintainer's contact information.
 
 Without this information, OSS developers and users may both make assumptions that seem "reasonable" from their side, and mismatched expectations can create friction and uncertainty.
