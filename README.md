@@ -19,7 +19,7 @@ typos and formatting:
 PRs are welcome
 ```
 
-This indicates that Jane expects to continue general development/support until at least 1st September 2023, and typo/formatting fixes until the start of 2024.  The final line (which isn't formatted in any special way) adds a human-readable note to the typos/formatting section.
+This indicates that Jane expects to continue general development/support until at least 1st September 2026, and typo/formatting fixes until the start of 2030.  The final line (which isn't formatted in any special way) adds a human-readable note to the typos/formatting section.
 
 If Jane stays motivated to work on this project, the dates in this file may be regularly bumped further into the future.
 
